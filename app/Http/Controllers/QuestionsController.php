@@ -59,4 +59,10 @@ class QuestionsController extends Controller
         return redirect(route('questions.index'));
 
     }
+
+    public function show(Question $question)
+    {
+        $question->increment('views_count');
+        return view('questions.show', compact(['question']));
+    }
 }
