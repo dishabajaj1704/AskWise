@@ -22,7 +22,7 @@ class QuestionFactory extends Factory
             'title' => rtrim(fake()->sentence(random_int(5, 10)), '.'),
             'body' => fake()->paragraphs(random_int(3, 7), true),
             'views_count' => random_int(0, 10),
-            'answers_count' => random_int(0, 10),
+            //'answers_count' => random_int(0, 10),
             'votes_count' => random_int(0, 10),
         ];
     }
