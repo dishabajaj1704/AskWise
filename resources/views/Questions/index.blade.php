@@ -7,6 +7,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
+                        @include('layouts._alert-messages')
                         <div>
                             <h1>All Questions</h1>
                         </div>
