@@ -51,4 +51,12 @@ class QuestionsController extends Controller
         session()->flash('success', 'Question has been updated successfully!');
         return redirect(route('questions.index'));
     }
+
+    public function destroy(Question $question)
+    {
+        $question->delete();
+        session()->flash('success', 'Question has been deleted successfully!');
+        return redirect(route('questions.index'));
+
+    }
 }
