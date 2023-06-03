@@ -34,4 +34,8 @@ class Answer extends Model
         return $this->created_at->diffForHumans();
     }
 
+    public function getBestAnswerStyleAttribute(Question $question)
+    {
+        return $this->id === $question->best_answer_id ? 'text-success' : 'text-dark';
+    }
 }
