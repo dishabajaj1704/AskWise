@@ -23,13 +23,13 @@ class AnswersController extends Controller
         return redirect($question->url);
     }
 
-    // public function destroy(Question $question, Answer $answer)
-    // {
-
-    //     $question->answer->delete();
-    //     session()->flash('success', 'Answer has been deleted successfully!');
-    //     return redirect($question->url);
-    // }
+    public function destroy(Question $question, Answer $answer)
+    {
+        $this->authorize('delete', [$question, $answer]);
+        $answer->delete();
+        session()->flash('success', 'Answer has been deleted successfully!');
+        return redirect()->back();
+    }
 
     public function update(UpdateAnswerRequest $request, Question $question, Answer $answer)
     {
