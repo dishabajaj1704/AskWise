@@ -46,9 +46,9 @@ class AnswerPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Question $question, Answer $answer): bool
+    public function delete(User $user, Answer $answer, Question $question): bool
     {
-        //
+        //Answer pehle he hoga kyunki AnswerPolicy mein lekha toh answer ka object milna chaiye hai
 
         return $user->id === $answer->user_id && $question->best_answer_id !== $answer->id;
     }
