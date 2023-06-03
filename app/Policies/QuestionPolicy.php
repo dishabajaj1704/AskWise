@@ -65,4 +65,9 @@ class QuestionPolicy
     {
         //
     }
+    public function markAsBest(User $user, Question $question): bool
+    {
+        // return $user->id === $question->owner->id;
+        return $user->id === $question->user_id; //(Foreign key)
+    }
 }
