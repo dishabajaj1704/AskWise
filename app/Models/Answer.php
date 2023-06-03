@@ -17,6 +17,11 @@ class Answer extends Model
         static::created(function (Answer $answer) {
             $answer->question->increment('answers_count');
         });
+
+        parent::boot();
+        static::deleted(function (Answer $answer) {
+            $answer->question->decrement('answers_count');
+        });
     }
 
     public function question()
