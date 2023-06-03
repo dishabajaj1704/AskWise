@@ -42,7 +42,7 @@
                                             class="btn btn-sm btn-outline-info">Edit</a>
                                     </div>
                                 @endcan
-                                @can('delete', $answer)
+                                @can('delete', [$answer, $question])
                                     <form action="{{ route('questions.answers.destroy', [$question->id, $answer->id]) }}"
                                         method="POST">
                                         @csrf
