@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(Answer::class);
     }
 
+    public function favorites()
+    {
+        return $this->belongsToMany(Question::class);
+    }
+
     public function getAvatarAttribute()
     {
         $rounded = true;
