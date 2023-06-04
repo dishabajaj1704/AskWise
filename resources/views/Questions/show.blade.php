@@ -26,10 +26,24 @@
                                     <a href="#" title="Down Vote" class="down-vote d-block text-center text-dark"><i
                                             class="fa fa-caret-down fa-3x"></i></a>
                                 </div>
-                                <div class="ms-4 mt-3">
-                                    <a href="#" title="Mark as Fav" class="favorite d-block text-center mb-1"><i
-                                            class="fa fa-star fa-2x text-dark"></i></a>
-                                    <h4 class="fav-count m-0 text-center">123</h4>
+                                <div class="ms-4 mt-3 {{ $question->is_favorite ? 'text-warning' : 'text-dark' }}">
+                                    @can('markAsFav', $question)
+                                        <form
+                                            action="{{ $question->is_favorite ? route('questions.mark-as-unfav', $question->id) : route('questions.mark-as-fav', $question->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @if ($question->is_favorite)
+                                                @method('DELETE')
+                                            @endif
+                                            <button type="submit"
+                                                class=" btn favorite d-block text-center mb-1
+                                                {{ $question->is_favorite ? 'text-warning' : 'text-dark' }}"><i
+                                                    class="fa fa-star fa-2x "></i></button>
+                                        </form>
+                                    @else
+                                        <div><i class="fa fa-star fa-2x text-dark"></i></div>
+                                    @endcan
+                                    <h4 class="fav-count m-0 text-center">{{ $question->favorites_count }}</h4>
                                 </div>
                             </div>
                             <div>
