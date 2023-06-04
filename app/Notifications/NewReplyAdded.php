@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Question;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -29,7 +30,7 @@ class NewReplyAdded extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -51,7 +52,8 @@ class NewReplyAdded extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+
+            'question' => $this->question,
         ];
     }
 }
