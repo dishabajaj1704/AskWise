@@ -76,4 +76,19 @@ class User extends Authenticatable
     {
         return $this->morphedByMany(Question::class, 'vote')->withTimestamps();
     }
+
+    public function hasQuestionUpVoted(Question $question)
+    {
+        return $this->votesQuestion()->where(['vote_id' => $question->id, 'vote' => 1])->exists();
+    }
+
+    public function hasQuestionDownVoted(Question $question)
+    {
+        return $this->votesQuestion()->where(['vote_id' => $question->id, 'vote' => -1])->exists();
+    }
+
+    public function hasVoteForQuestion(Question $question)
+    {
+        return $this->hasQuestionUpVoted($question) || $this->hasQuestionDownVoted($question);
+    }
 }
