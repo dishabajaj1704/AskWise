@@ -20,11 +20,27 @@
                         <div class="d-flex justify-content-between me-3">
                             <div class="d-flex">
                                 <div>
-                                    <a href="#" title="Up Vote" class="up-vote d-block text-center text-dark"><i
-                                            class="fa fa-caret-up fa-3x"></i></a>
+                                    @auth
+                                        <form action="{{ route('questions.vote', [$question->id, 1]) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" title="Up Vote"
+                                                class="up-vote d-block text-center {{ auth()->user()->hasQuestionUpVoted($question)? 'text-success': 'text-dark' }} btn"><i
+                                                    class="fa fa-caret-up fa-3x"></i></button>
+                                        </form>
+                                    @else
+                                        <h5>Votes <br> Count</h5>
+                                    @endauth
+                                    {{--                                    <a href="#" title="Up Vote" class="up-vote d-block text-center text-dark"><i class="fa fa-caret-up fa-3x"></i></a> --}}
                                     <h4 class="vote-count text-muted text-center m-0">{{ $question->votes_count }}</h4>
-                                    <a href="#" title="Down Vote" class="down-vote d-block text-center text-dark"><i
-                                            class="fa fa-caret-down fa-3x"></i></a>
+                                    @auth
+                                        <form action="{{ route('questions.vote', [$question->id, -1]) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" title="Down Vote"
+                                                class="up-vote d-block text-center {{ auth()->user()->hasQuestionDownVoted($question)? 'text-success': 'text-dark' }} btn"><i
+                                                    class="fa fa-caret-down fa-3x"></i></button>
+                                        </form>
+                                    @endauth
+                                    {{--                                    <a href="#" title="Down Vote" class="down-vote d-block text-center text-dark"><i class="fa fa-caret-down fa-3x"></i></a> --}}
                                 </div>
                                 <div class="ms-4 mt-3 {{ $question->is_favorite ? 'text-warning' : 'text-dark' }}">
                                     @can('markAsFav', $question)
@@ -36,12 +52,11 @@
                                                 @method('DELETE')
                                             @endif
                                             <button type="submit"
-                                                class=" btn favorite d-block text-center mb-1
-                                                {{ $question->is_favorite ? 'text-warning' : 'text-dark' }}"><i
-                                                    class="fa fa-star fa-2x "></i></button>
+                                                class="favorite btn d-block text-center mb-1 {{ $question->is_favorite ? 'text-warning' : 'text-dark' }}"><i
+                                                    class="fa fa-star fa-2x"></i></button>
                                         </form>
                                     @else
-                                        <div><i class="fa fa-star fa-2x text-dark"></i></div>
+                                        <div><i class="fa fa-star fa-2x"></i></div>
                                     @endcan
                                     <h4 class="fav-count m-0 text-center">{{ $question->favorites_count }}</h4>
                                 </div>
@@ -64,7 +79,9 @@
                 </div>
             </div>
         </div>
-        @include('answers._create')
+        @auth()
+            @include('answers._create')
+        @endauth
         @include('answers._index')
     </div>
 @endsection
