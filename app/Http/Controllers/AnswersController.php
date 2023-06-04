@@ -7,6 +7,7 @@ use App\Http\Requests\MarkAsBestRequest;
 use App\Http\Requests\UpdateAnswerRequest;
 use App\Models\Answer;
 use App\Models\Question;
+use App\Notifications\NewReplyAdded;
 use Illuminate\Http\Request;
 
 class AnswersController extends Controller
@@ -19,6 +20,7 @@ class AnswersController extends Controller
             'body' => $request->body,
             'user_id' => auth()->id()
         ]);
+        $question->owner->notify(new NewReplyAdded($question));
         session()->flash('success', 'Answer has been added successfully!');
         return redirect($question->url);
     }
