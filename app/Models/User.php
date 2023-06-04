@@ -65,4 +65,15 @@ class User extends Authenticatable
         $name = $this->name;
         return "https://ui-avatars.com/api/?name={$name}&rounded={$rounded}&size={$size}";
     }
+
+
+    public function votesQuestion()
+    {
+        return $this->morphedByMany(Question::class, 'vote')->withTimestamps();
+    }
+
+    public function votesAnswer()
+    {
+        return $this->morphedByMany(Question::class, 'vote')->withTimestamps();
+    }
 }
