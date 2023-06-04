@@ -48,8 +48,27 @@ class Question extends Model
         return $this->hasMany(Answer::class);
     }
 
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class);
+    }
     public function markAsBest(Answer $answer)
     {
         $this->update(['best_answer_id' => $answer->id]);
+    }
+
+    public function isBestAnswer(Answer $answer)
+    {
+        return $this->best_answer_id === $answer->id;
+    }
+
+    public function getFavoritesCountAttribute()
+    {
+        return $this->favorites()->count();
+    }
+
+    public function getIsFavoriteAttribute()
+    {
+        return $this->favorites()->where('user_id', auth()->id())->count() > 0;
     }
 }
