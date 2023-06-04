@@ -70,4 +70,9 @@ class QuestionPolicy
         // return $user->id === $question->owner->id;
         return $user->id === $question->user_id; //(Foreign key)
     }
+
+    public function markAsFav(User $user, Question $question): bool
+    {
+        return $user->id !== $question->id;
+    }
 }
