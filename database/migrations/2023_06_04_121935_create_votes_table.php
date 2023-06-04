@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('vote_id');
             $table->string('vote_type');
@@ -23,6 +22,7 @@ return new class extends Migration {
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
