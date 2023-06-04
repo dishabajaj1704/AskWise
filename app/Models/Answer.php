@@ -43,4 +43,9 @@ class Answer extends Model
     {
         return $this->id === $question->best_answer_id ? 'text-success' : 'text-dark';
     }
+    public function votes()
+    {
+        return $this->morphToMany(User::class, 'vote')->withTimestamps();
+    }
+
 }
